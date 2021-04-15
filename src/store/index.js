@@ -45,6 +45,21 @@ export default new Vuex.Store({
     criarUsuario(context, payload){
       context.commit("UPDATE_USUARIO", { id: payload.email }); //Atribuindo o e-mail que foi definido como ID
       return api.post("/usuario", payload); //payload é o objeto com todas as informações do usuário
+    },
+    deslogarUsuario(context){
+      context.commit("UPDATE_USUARIO", {
+        id: "",
+        nome: "",
+        email: "",
+        senha: "",
+        cep: "",
+        rua: "",
+        numero: "",
+        bairro: "",
+        cidade: "",
+        estado: ""
+      });
+      context.commit("UPDATE_LOGIN", false);
     }
   }
-})
+});
