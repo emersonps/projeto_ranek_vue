@@ -19,13 +19,46 @@
     <label for="estado">Estado</label>
     <input id="estado" name="estado" type="text" v-model="estado">
     <div class="button">
+
       <slot></slot>
     </div>
   </form>
 </template>
 
 <script>
+import { mapFields } from "@/helpers.js";
+
 export default {
+  computed:{
+    //desistrutura par criar um objeto com cada um dos itens (get e set aos respectivos campos)
+    ...mapFields({
+      //passa os campos
+      fields: ["nome","email","senha","cep","rua","numero","bairro","cidade","estado"],
+      //passa a base - objeto de UsuarioForm
+      base: "usuario",
+      //e a mutation
+      mutation: "UPDATE_USUARIO" 
+    }),
+    /* com a função anterior, posso excluir as ações abaixo */ 
+    // nome: {
+    //   get(){
+    //     return this.$store.state.usuario.nome;
+    //   },
+    //   set(value){
+    /* Optei por enviar o value como objeto pelo fato de ao digitar no input, ele substitui o caractere pelo anterior - plugin:mapFields como função helper - dentro de helpers.js */
+    //     this.$store.commit("UPDATE_USUARIO", {nome: value});
+    //   }
+    // },
+    // email: {
+    //   get(){
+    //     return this.$store.state.usuario.email;
+    //   },
+    //   set(value){
+    /* Optei por enviar o value como objeto pelo fato de ao digitar no input, ele substitui o caractere pelo anterior - plugin:mapFields como função helper - dentro de helpers.js */
+    //     this.$store.commit("UPDATE_USUARIO", {email: value});
+    //   }
+    // }
+  }
   
 };
 </script>

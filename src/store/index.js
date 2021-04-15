@@ -5,6 +5,7 @@ import { api } from '@/services.js';
 Vue.use(Vuex)
 
 export default new Vuex.Store({
+  strict: true,
   state: {
     login: false,
     //Invés de criar um objeto tipo flat (só tem uma propriedade dentro dele - um nível de método) 
@@ -29,7 +30,8 @@ export default new Vuex.Store({
       state.login = payload;
     },
     UPDATE_USUARIO(state, payload){
-      state.usuario = payload;
+      /* uso do Object.assign() no payload, para combinar objetos (torna o código mais inteligente na hora ;de preencher os forms e inputar os valores em seus respectivos campos) e para evitar a desistruturação do objeto "usuario" */ 
+      state.usuario = Object.assign(state.usuario, payload);
     }
   },
   actions: {
