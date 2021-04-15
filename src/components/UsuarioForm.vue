@@ -7,7 +7,7 @@
     <label for="senha">Senha</label>
     <input id="senha" name="senha" type="password" v-model="senha">
     <label for="cep">Cep</label>
-    <input id="cep" name="cep" type="text" v-model="cep">
+    <input id="cep" name="cep" type="text" v-model="cep" @keyup="preencherCep">
     <label for="rua">Rua</label>
     <input id="rua" name="rua" type="text" v-model="rua">
     <label for="numero">Numero</label>
@@ -19,7 +19,6 @@
     <label for="estado">Estado</label>
     <input id="estado" name="estado" type="text" v-model="estado">
     <div class="button">
-
       <slot></slot>
     </div>
   </form>
@@ -27,6 +26,7 @@
 
 <script>
 import { mapFields } from "@/helpers.js";
+import { getCep } from "@/services.js";
 
 export default {
   computed:{
@@ -58,8 +58,24 @@ export default {
     //     this.$store.commit("UPDATE_USUARIO", {email: value});
     //   }
     // }
+  },
+  methods: {
+    preencherCep() {
+      //para aceitar apenas digitos 
+      const cep = this.cep.replace(/\D/g, "");
+      if(cep.length === 8){
+        getCep(cep).then(response => {
+          console.log(response);
+          //autopreencher o campo com o logradouro
+          this.rua = response.data.logradouro;
+          this.bairro = response.data.bairro;
+          this.estado = response.data.uf;
+          this.cidade = response.data.localidade;
+
+        })
+      }
+    }
   }
-  
 };
 </script>
 
