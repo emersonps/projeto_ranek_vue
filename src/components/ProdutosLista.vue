@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import ProdutosPaginar from "@/components/produtosPaginar.vue";
+import ProdutosPaginar from "@/components/ProdutosPaginar.vue";
 import { api } from "@/services.js";
 import { serialize } from "@/helpers.js";
 
