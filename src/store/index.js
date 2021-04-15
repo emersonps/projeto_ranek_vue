@@ -36,10 +36,15 @@ export default new Vuex.Store({
   },
   actions: {
     getUsuario(context, payload){
-      api.get(`/usuario/${payload}`).then(response => {
+      //Uso do return - retorna toda a parte do api para usar o then no dispatch do LoginCriar
+      return api.get(`/usuario/${payload}`).then(response => {
         context.commit("UPDATE_USUARIO", response.data);
         context.commit("UPDATE_LOGIN", true);
       })
+    },
+    criarUsuario(context, payload){
+      context.commit("UPDATE_USUARIO", { id: payload.email }); //Atribuindo o e-mail que foi definido como ID
+      return api.post("/usuario", payload); //payload é o objeto com todas as informações do usuário
     }
-  },
+  }
 })

@@ -11,6 +11,7 @@ export const api = {
     return axiosInstance.get(endpoint);
   },
   post(endpoint, body){
+    //Passando o body (objeto), o axios transforma em Json e posta na API
     return axiosInstance.post(endpoint, body);
   }
 };

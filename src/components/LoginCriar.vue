@@ -4,7 +4,8 @@
     <transition mode="out-in">
       <button v-if="!criar" class="btn" @click="criar = true">Criar Conta</button>
       <UsuarioForm v-else>
-        <button class="btn btn-form">Criar Usuário</button>
+        <!-- Prevent - usado para não dar o refresh na página, após criar o usuário -->
+        <button class="btn btn-form" @click.prevent="criarUsuario">Criar Usuário</button>
       </UsuarioForm>
     </transition>
   </section>
@@ -22,6 +23,20 @@ export default {
     return {
       criar: false
     };
+  },
+  methods: {
+    // uso da função assincrona - para evitar o uso do then e usar o await 
+    async criarUsuario(){
+      // mostrar erro em caso de função assincrona
+      try{
+      // Uso do await para ativar o código da linha quando a promessa anterior for resolvida 
+      await this.$store.dispatch("criarUsuario", this.$store.state.usuario);
+      await this.$store.dispatch("getUsuario", this.$store.state.usuario.email);
+      this.$router.push({ name: "usuario"});
+      }catch(error){
+        console.log(error);
+      }
+    }
   }
 };
 </script>
